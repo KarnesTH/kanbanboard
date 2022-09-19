@@ -6,6 +6,7 @@
       placeholder="Neue Aufgabe"
       v-model="content"
     />
+    <small>Noch {{ numberOfCharsLeft }} Zeichen erlaubt</small>
     <div class="d-grid my-2">
       <button class="btn btn-secondary" @click="submitTask()">Eintragen</button>
     </div>
@@ -24,6 +25,7 @@ export default {
       return true;
     },
   },
+  inject: ["maxNumberOfChars"],
   data() {
     return {
       content: "",
@@ -35,6 +37,11 @@ export default {
         content: this.content,
       });
       this.content = "";
+    },
+  },
+  computed: {
+    numberOfCharsLeft() {
+      return this.maxNumberOfChars - this.content.length;
     },
   },
 };
